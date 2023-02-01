@@ -11,7 +11,7 @@ npm install
 npm run start
 ```
 
-this should open the application localhost:3000 in your browser.
+This should open the application in http://localhost:3000 on your browser.
 
 ## Notes
 
