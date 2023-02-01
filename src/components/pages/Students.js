@@ -1,5 +1,9 @@
 import { useState } from 'react';
+import DatePicker from "react-datepicker";
 import styled from 'styled-components'
+import moment from 'moment'
+
+import "react-datepicker/dist/react-datepicker.css"
 
 const StudentForm = styled.form`
 display: flex;
@@ -21,8 +25,8 @@ const FormError = styled.h5`
 const StudentList = styled.table`
     margin-top: 30px;
     thead td{font-weight: bold;}
-    tr:nth-child(odd), thead td {background-color: lightgreen;}
-    td{
+    tr:nth-child(even), thead tr {background-color: lightgreen;}
+    td, th{
         padding: 5px 15px;
     }
 `
@@ -40,17 +44,24 @@ export const Students = () => {
         if (!validate())
             return;
 
-        students.push({ firstName, lastName, dob });
+        students.push({ firstName, lastName, dob: dob.toLocaleDateString('en-CA') });
         setStudents(students)
         window.localStorage.setItem('students', JSON.stringify(students))
         clearForm();
     }
 
     const validate = (e) => {
+
         if (!firstName || !lastName || !dob) {
             setFormError('The form must be completed')
             return false;
         }
+
+        if (moment().subtract(10, 'y').isBefore(dob)) {
+            setFormError('The student must be at least 10 years old')
+            return false;
+        }
+
         return true;
     }
     const clearForm = () => {
@@ -78,31 +89,35 @@ export const Students = () => {
                     onChange={e => setLastName(e.target.value)}
                     value={lastName || ''}
                 />
-                <input
-                    type='text'
-                    name='dob'
-                    placeholder='Date of Birth'
-                    onChange={e => setDob(e.target.value)}
-                    value={dob || ''}
+                <DatePicker
+                    selected={dob}
+                    onChange={(date) => setDob(date)}
+                    placeholderText='Date of Birth (DD/MM/YYYY)'
+                    dateFormat="dd/MM/yyyy"
                 />
+
                 <button type='submit'>Submit</button>
             </StudentForm>
 
 
-            {students.length &&
+            {students.length > 0 &&
                 <StudentList>
                     <thead>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Date of Birth</td>
-                    </thead>
-                    {students.map(student => (
                         <tr>
-                            <td>{student.firstName}</td>
-                            <td>{student.lastName}</td>
-                            <td>{student.dob}</td>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Date of Birth</th>
                         </tr>
-                    ))}
+                    </thead>
+                    <tbody>
+                        {students.map(student => (
+                            <tr key={`${student.firstName}-${student.lastName}`} >
+                                <td>{student.firstName}</td>
+                                <td>{student.lastName}</td>
+                                <td>{student.dob}</td>
+                            </tr>
+                        ))}
+                    </tbody>
                 </StudentList>}
         </>
     );
