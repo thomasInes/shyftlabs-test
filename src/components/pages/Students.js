@@ -44,7 +44,7 @@ export const Students = () => {
         if (!validate())
             return;
 
-        students.push({ firstName, lastName, dob: dob.toLocaleDateString('en-CA') });
+        students.push({ firstName, lastName, dob: moment(dob).format('DD/MM/yyyy') });
         setStudents(students)
         window.localStorage.setItem('students', JSON.stringify(students))
         clearForm();
