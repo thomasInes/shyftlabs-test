@@ -24,10 +24,10 @@ const Link = styled(NavLink)`
 
 const Navbar = () => (
     <Container>
-        <Link exact activeClassName='active' to='/'>Home</Link>
-        <Link exact activeClassName='active' to='/students'>Students</Link>
-        <Link exact activeClassName='active' to='/courses'>Courses</Link>
-        <Link exact activeClassName='active' to='/grades'>Grades</Link>
+        <Link exact="true" activeclassname='active' to='/'>Home</Link>
+        <Link exact="true" activeclassname='active' to='/students'>Students</Link>
+        <Link exact="true" activeclassname='active' to='/courses'>Courses</Link>
+        <Link exact="true" activeclassname='active' to='/grades'>Grades</Link>
     </Container>
 )
 
