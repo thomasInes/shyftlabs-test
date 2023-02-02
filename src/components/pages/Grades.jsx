@@ -66,55 +66,67 @@ const Grades = () => {
       {students.length <= 0 && <h4>Please add students</h4>}
       {courses.length <= 0 && <h4>Please add courses</h4>}
       {students.length > 0 && courses.length > 0
-                && (
-                <>
-                  <h2>Results</h2>
-                  <ResultForm onSubmit={handleSubmit}>
-                    <select name="student" onChange={(e) => { setStudent(e.target.value); }}>
-                      <option key="0" value="0">-- select student --</option>
-                      {students.map((el) => (
-                        <option
-                          value={`${el.firstName} ${el.lastName}`}
-                          key={`${el.firstName} ${el.lastName}`}
-                        >
-                          {`${el.firstName} ${el.lastName}`}
-                        </option>
-                      ))}
-                    </select>
-                    <select name="course" onChange={(e) => { setCourse(e.target.value); }}>
-                      <option key="0" value="0">-- select course --</option>
-                      {courses.map((el) => <option key={el} value={el}>{el}</option>)}
-                    </select>
-                    <select name="grade" onChange={(e) => { setGrade(e.target.value); }}>
-                      <option key="0" value="0">-- select grade --</option>
-                      {['A', 'B', 'C', 'D', 'E'].map((el) => <option key={el} value={el}>{el}</option>)}
-                    </select>
-                    <button type="submit">Submit</button>
-                  </ResultForm>
-                </>
-                )}
+        && (
+          <>
+            <h2>Results</h2>
+            <ResultForm onSubmit={handleSubmit}>
+              <select
+                name="student"
+                onChange={(e) => { setStudent(e.target.value); }}
+                value={student}
+              >
+                <option key="0" value="0">-- select student --</option>
+                {students.map((el) => (
+                  <option
+                    value={`${el.firstName} ${el.lastName}`}
+                    key={`${el.firstName} ${el.lastName}`}
+                  >
+                    {`${el.firstName} ${el.lastName}`}
+                  </option>
+                ))}
+              </select>
+              <select
+                name="course"
+                onChange={(e) => { setCourse(e.target.value); }}
+                value={course}
+              >
+                <option key="0" value="0">-- select course --</option>
+                {courses.map((el) => <option key={el} value={el}>{el}</option>)}
+              </select>
+              <select
+                name="grade"
+                onChange={(e) => { setGrade(e.target.value); }}
+                value={grade}
+              >
+                <option key="0" value="0">-- select grade --</option>
+                {['A', 'B', 'C', 'D', 'E'].map((el) => <option key={el} value={el}>{el}</option>)}
+              </select>
+              <button type="submit">Submit</button>
+            </ResultForm>
+          </>
+        )}
 
       {results.length > 0
-                && (
-                <ResultsList>
-                  <thead>
-                    <tr>
-                      <th>Student</th>
-                      <th>Course</th>
-                      <th>Grade</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {results.map((result) => (
-                      <tr key={`${result.student}-${result.course}-${result.grade}`}>
-                        <td>{result.student}</td>
-                        <td>{result.course}</td>
-                        <td>{result.grade}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </ResultsList>
-                )}
+        && (
+          <ResultsList>
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Course</th>
+                <th>Grade</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.map((result) => (
+                <tr key={`${result.student}-${result.course}-${result.grade}`}>
+                  <td>{result.student}</td>
+                  <td>{result.course}</td>
+                  <td>{result.grade}</td>
+                </tr>
+              ))}
+            </tbody>
+          </ResultsList>
+        )}
 
       <NotificationContainer />
     </>
